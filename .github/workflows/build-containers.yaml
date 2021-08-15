@@ -1,0 +1,55 @@
+name: Build Containers
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-php-7.3:
+    name: PHP 7.3
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Authenticate with Docker Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build Container
+        run: docker build -t defrostedtuna/php-nginx:7.3 . -f php-7.3/Dockerfile
+
+      - name: Push Container
+        run: docker push defrostedtuna/php-nginx:7.3
+
+  build-php-7.4:
+    name: PHP 7.4
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Authenticate with Docker Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build Container
+        run: docker build -t defrostedtuna/php-nginx:7.4 . -f php-7.4/Dockerfile
+
+      - name: Push Container
+        run: docker push defrostedtuna/php-nginx:7.4
+
+  build-php-8.0:
+    name: PHP 8.0
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Authenticate with Docker Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build Container
+        run: docker build -t defrostedtuna/php-nginx:8.0 . -f php-8.0/Dockerfile
+
+      - name: Push Container
+        run: docker push defrostedtuna/php-nginx:8.0
