@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM alpine:3.12
+FROM alpine:3.12
 LABEL Maintainer="Rick Bennett <rbennett1106@gmail.com>"
 
 # Essentials
