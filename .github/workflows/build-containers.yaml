@@ -13,40 +13,35 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Authenticate with Docker Registry
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
-      - name: Add QEMU Support
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Create Builder
-        run: |
-          docker buildx create \
-          --use \
-          --bootstrap \
-          --driver docker-container \
-          --driver-opt network=host \
-          --name lordran \
-          --node lordran \
-          --platform linux/amd64,linux/arm64
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Main Container
-        run: |
-          docker buildx build \
-          --no-cache \
-          --push \
-          -t defrostedtuna/php-nginx:7.3 . \
-          -f php-7.3/Dockerfile \
-          --platform linux/amd64,linux/arm64
+      - name: Build Production Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-7.3/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:7.3
 
-      - name: Build Dev Container
-        run: |
-          docker buildx build \
-          --no-cache \
-          --push \
-          -t defrostedtuna/php-nginx:7.3-dev . \
-          -f php-7.3/dev.Dockerfile \
-          --platform linux/amd64,linux/arm64
+      - name: Build Development Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-7.3/dev.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:7.3-dev
 
   build-php-74:
     name: PHP 7.4
@@ -55,40 +50,35 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Authenticate with Docker Registry
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
-      - name: Add QEMU Support
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Create Builder
-        run: |
-          docker buildx create \
-          --use \
-          --bootstrap \
-          --driver docker-container \
-          --driver-opt network=host \
-          --name lordran \
-          --node lordran \
-          --platform linux/amd64,linux/arm64
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Main Container
-        run: |
-          docker buildx build \
-          --no-cache \
-          --push \
-          -t defrostedtuna/php-nginx:7.4 . \
-          -f php-7.4/Dockerfile \
-          --platform linux/amd64,linux/arm64
+      - name: Build Production Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-7.4/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:7.4
 
-      - name: Build Dev Container
-        run: |
-          docker buildx build \
-          --no-cache \
-          --push \
-          -t defrostedtuna/php-nginx:7.4-dev . \
-          -f php-7.4/dev.Dockerfile \
-          --platform linux/amd64,linux/arm64
+      - name: Build Development Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-7.4/dev.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:7.4-dev
 
   build-php-80:
     name: PHP 8.0
@@ -97,37 +87,32 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Authenticate with Docker Registry
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
-      - name: Add QEMU Support
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Create Builder
-        run: |
-          docker buildx create \
-          --use \
-          --bootstrap \
-          --driver docker-container \
-          --driver-opt network=host \
-          --name lordran \
-          --node lordran \
-          --platform linux/amd64,linux/arm64
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Main Container
-        run: |
-          docker buildx build \
-          --no-cache \
-          --push \
-          -t defrostedtuna/php-nginx:8.0 . \
-          -f php-8.0/Dockerfile \
-          --platform linux/amd64,linux/arm64
+      - name: Build Production Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-8.0/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:8.0
 
-      - name: Build Dev Container
-        run: |
-          docker buildx build \
-          --no-cache \
-          --push \
-          -t defrostedtuna/php-nginx:8.0-dev . \
-          -f php-8.0/dev.Dockerfile \
-          --platform linux/amd64,linux/arm64
+      - name: Build Development Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-8.0/dev.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:8.0-dev
