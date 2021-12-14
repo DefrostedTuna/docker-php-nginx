@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM defrostedtuna/php-nginx:8.0
+FROM defrostedtuna/php-nginx:8.0
 
 # Add sqlite and xdebug for development purposes.
 RUN apk add --no-cache \
