@@ -31,7 +31,7 @@ jobs:
           --platform linux/amd64,linux/arm64
 
       - name: Build Main Container
-      - run: |
+        run: |
           docker buildx build \
           --no-cache \
           --push \
@@ -40,7 +40,7 @@ jobs:
           --platform linux/amd64,linux/arm64
 
       - name: Build Dev Container
-      - run: |
+        run: |
           docker buildx build \
           --no-cache \
           --push \
@@ -73,7 +73,7 @@ jobs:
           --platform linux/amd64,linux/arm64
 
       - name: Build Main Container
-      - run: |
+        run: |
           docker buildx build \
           --no-cache \
           --push \
@@ -82,7 +82,7 @@ jobs:
           --platform linux/amd64,linux/arm64
 
       - name: Build Dev Container
-      - run: |
+        run: |
           docker buildx build \
           --no-cache \
           --push \
@@ -115,7 +115,7 @@ jobs:
           --platform linux/amd64,linux/arm64
 
       - name: Build Main Container
-      - run: |
+        run: |
           docker buildx build \
           --no-cache \
           --push \
@@ -124,7 +124,7 @@ jobs:
           --platform linux/amd64,linux/arm64
 
       - name: Build Dev Container
-      - run: |
+        run: |
           docker buildx build \
           --no-cache \
           --push \
