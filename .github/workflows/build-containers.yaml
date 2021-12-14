@@ -19,16 +19,34 @@ jobs:
       - name: Add QEMU Support
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
+      - name: Create Builder
+        run: |
+          docker buildx create \
+          --use \
+          --bootstrap \
+          --driver docker-container \
+          --driver-opt network=host \
+          --name lordran \
+          --node lordran \
+          --platform linux/amd64,linux/arm64
+
       - name: Build Main Container
-        run: docker buildx build --no-cache -t defrostedtuna/php-nginx:7.3 . -f php-7.3/Dockerfile
+      - run: |
+          docker buildx build \
+          --no-cache \
+          --push \
+          -t defrostedtuna/php-nginx:7.3 . \
+          -f php-7.3/Dockerfile \
+          --platform linux/amd64,linux/arm64
 
       - name: Build Dev Container
-        run: docker buildx build --no-cache -t defrostedtuna/php-nginx:7.3-dev . -f php-7.3/dev.Dockerfile
-
-      - name: Push Containers
-        run: |
-          docker push defrostedtuna/php-nginx:7.3
-          docker push defrostedtuna/php-nginx:7.3-dev
+      - run: |
+          docker buildx build \
+          --no-cache \
+          --push \
+          -t defrostedtuna/php-nginx:7.3-dev . \
+          -f php-7.3/dev.Dockerfile \
+          --platform linux/amd64,linux/arm64
 
   build-php-74:
     name: PHP 7.4
@@ -43,16 +61,34 @@ jobs:
       - name: Add QEMU Support
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
+      - name: Create Builder
+        run: |
+          docker buildx create \
+          --use \
+          --bootstrap \
+          --driver docker-container \
+          --driver-opt network=host \
+          --name lordran \
+          --node lordran \
+          --platform linux/amd64,linux/arm64
+
       - name: Build Main Container
-        run: docker buildx build --no-cache -t defrostedtuna/php-nginx:7.4 . -f php-7.4/Dockerfile
+      - run: |
+          docker buildx build \
+          --no-cache \
+          --push \
+          -t defrostedtuna/php-nginx:7.4 . \
+          -f php-7.4/Dockerfile \
+          --platform linux/amd64,linux/arm64
 
       - name: Build Dev Container
-        run: docker buildx build --no-cache -t defrostedtuna/php-nginx:7.4-dev . -f php-7.4/dev.Dockerfile
-
-      - name: Push Containers
-        run: |
-          docker push defrostedtuna/php-nginx:7.4
-          docker push defrostedtuna/php-nginx:7.4-dev
+      - run: |
+          docker buildx build \
+          --no-cache \
+          --push \
+          -t defrostedtuna/php-nginx:7.4-dev . \
+          -f php-7.4/dev.Dockerfile \
+          --platform linux/amd64,linux/arm64
 
   build-php-80:
     name: PHP 8.0
@@ -67,13 +103,31 @@ jobs:
       - name: Add QEMU Support
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
+      - name: Create Builder
+        run: |
+          docker buildx create \
+          --use \
+          --bootstrap \
+          --driver docker-container \
+          --driver-opt network=host \
+          --name lordran \
+          --node lordran \
+          --platform linux/amd64,linux/arm64
+
       - name: Build Main Container
-        run: docker buildx build --no-cache -t defrostedtuna/php-nginx:8.0 . -f php-8.0/Dockerfile
+      - run: |
+          docker buildx build \
+          --no-cache \
+          --push \
+          -t defrostedtuna/php-nginx:8.0 . \
+          -f php-8.0/Dockerfile \
+          --platform linux/amd64,linux/arm64
 
       - name: Build Dev Container
-        run: docker buildx build --no-cache -t defrostedtuna/php-nginx:8.0-dev . -f php-8.0/dev.Dockerfile
-
-      - name: Push Containers
-        run: |
-          docker push defrostedtuna/php-nginx:8.0
-          docker push defrostedtuna/php-nginx:8.0-dev
+      - run: |
+          docker buildx build \
+          --no-cache \
+          --push \
+          -t defrostedtuna/php-nginx:8.0-dev . \
+          -f php-8.0/dev.Dockerfile \
+          --platform linux/amd64,linux/arm64
