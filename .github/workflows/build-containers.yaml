@@ -116,3 +116,40 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: defrostedtuna/php-nginx:8.0-dev
+
+  build-php-81:
+    name: PHP 8.1
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Production Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-8.1/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:8.1
+
+      - name: Build Development Container
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: php-8.1/dev.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: defrostedtuna/php-nginx:8.1-dev
