@@ -2,9 +2,9 @@ FROM defrostedtuna/php-nginx:8.3
 
 # Add sqlite and xdebug for development purposes.
 RUN apk add --no-cache \
-  php82-pdo_sqlite \
-  php82-sqlite3 \
-  php82-xdebug
+  php83-pdo_sqlite \
+  php83-sqlite3 \
+  php83-xdebug
 
 # Increase the PHP memory limit for development.
 RUN echo $'\nmemory_limit = 1G' >> /etc/php/php.ini 
